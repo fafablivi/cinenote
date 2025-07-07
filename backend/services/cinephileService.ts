@@ -13,15 +13,8 @@ export async function getCinephileById(cinephileId: string) {
 }
 
 export async function getCinephileByField(field: string, value: string) {
-    try {
-        const cinephile = await db("cinephile").where(field, value).first();
-        if (!cinephile) {
-            throw new Error(`Cinéphile avec ${field} "${value}" non trouvé`);
-        }
-        return cinephile;
-    } catch (error) {
-        throw new Error("Erreur lors de la récupération du cinéphile: " + (error instanceof Error ? error.message : "Erreur inconnue"));
-    }
+    const cinephile = await db("cinephile").where(field, value).first();
+    return cinephile;
 }
 
 export async function getCinephiles() {
@@ -56,7 +49,7 @@ export async function createCinephile(
 
 export async function updateCinephile(
     cinephileId: string,
-    updates: Partial<{ name: string; email: string; password: string, biography: string, profile_picture:string }>,
+    updates: Partial<{ name: string; email: string; password: string, biography: string, profile_picture: string }>,
 ) {
     try {
         const updatedCinephile = await db("cinephile")
