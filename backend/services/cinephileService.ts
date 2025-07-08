@@ -1,15 +1,8 @@
-import db from "@/config/dbConfig";
+import db from "../config/dbConfig";
 
 export async function getCinephileById(cinephileId: string) {
-    try {
-        const cinephile = await db("cinephile").where({ id: cinephileId }).first();
-        if (!cinephile) {
-            throw new Error("Cinéphile non trouvé");
-        }
-        return cinephile;
-    } catch (error) {
-        throw new Error("Erreur lors de la récupération du cinéphile: " + (error instanceof Error ? error.message : "Erreur inconnue"));
-    }
+    const cinephile = await db("cinephile").where({ id: cinephileId }).first();
+    return cinephile;
 }
 
 export async function getCinephileByField(field: string, value: string) {
@@ -18,12 +11,8 @@ export async function getCinephileByField(field: string, value: string) {
 }
 
 export async function getCinephiles() {
-    try {
-        const cinephiles = await db("cinephile").select("*");
-        return cinephiles;
-    } catch (error) {
-        throw new Error("Erreur lors de la récupération des cinéphiles: " + (error instanceof Error ? error.message : "Erreur inconnue"));
-    }
+    const cinephiles = await db("cinephile").select("*");
+    return cinephiles;
 }
 
 export async function createCinephile(
