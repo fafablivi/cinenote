@@ -1,10 +1,18 @@
 import type { Context } from "hono";
 import { getCinephileById } from "../services/cinephileService";
 import { HTTP_STATUS } from "../lib/httpStatus";
+import { getCinephileIdFromToken } from "../lib/tokenUtils";
 
 export const getCinephile = async (c: Context): Promise<Response> => {
     try {
-        const cinephileId = c.req.param("id");
+        const cinephileId = getCinephileIdFromToken(c);
+
+        if (!cinephileId) {
+            return c.json(
+                { error: "Cinéphile ID manquant" },
+                HTTP_STATUS.BAD_REQUEST
+            );
+        }
         const cinephile = await getCinephileById(cinephileId);
 
         if (!cinephile) {

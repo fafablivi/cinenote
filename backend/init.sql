@@ -10,12 +10,13 @@ CREATE TABLE IF NOT EXISTS cinephile (
     password VARCHAR(255) NOT NULL,
     profile_picture VARCHAR(255),
     biography TEXT,
+    role VARCHAR(50) CHECK (role IN ('user', 'admin')) DEFAULT 'user',
     created_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS movie (
     id SERIAL PRIMARY KEY,
-    tmdb_id INT NOT NULL,
+    tmdb_id string NOT NULL,
     poster_path VARCHAR(255),
     title VARCHAR(255) NOT NULL,
     description TEXT,

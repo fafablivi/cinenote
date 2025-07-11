@@ -11,3 +11,14 @@ export const generateJWT = (id: string, name: string) => {
   });
 };
 
+export const getCinephileByToken = (token: string) => {
+  const secretKey = process.env.JWT_SECRET;
+  if (!secretKey) throw new Error("Clé secrète introuvable");
+
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    return decoded as { id: string };
+  } catch (error) {
+    throw new Error("Token invalide ou expiré");
+  }
+}

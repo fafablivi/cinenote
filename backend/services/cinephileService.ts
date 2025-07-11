@@ -2,7 +2,15 @@ import db from "../config/dbConfig";
 
 export async function getCinephileById(cinephileId: string) {
     const cinephile = await db("cinephile").where({ id: cinephileId }).first();
-    return cinephile;
+    return {
+        id: cinephile?.id,
+        name: cinephile?.name,
+        email: cinephile?.email,
+        biography: cinephile?.biography,
+        profile_picture: cinephile?.profile_picture,
+        created_at: cinephile?.created_at || new Date().toISOString(),
+        role: cinephile?.role,
+    };
 }
 
 export async function getCinephileByField(field: string, value: string) {

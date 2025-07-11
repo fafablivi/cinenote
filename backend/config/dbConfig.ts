@@ -20,12 +20,6 @@ const dbConfig = knex({
 });
 
 async function testConnection() {
-    console.log("Variables d'environnement chargées :", {
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        database: process.env.DB_NAME,
-        port: process.env.DB_PORT
-    });
     try {
         await dbConfig.raw("SELECT 1+1 as result");
     } catch (error) {

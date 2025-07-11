@@ -24,9 +24,12 @@ export const register = async (c: Context): Promise<Response> => {
         }
 
         const hashedPassword = await hashPassword(password);
-        const cinephileId = await createCinephile(name, email, hashedPassword);
+        const cinephile = await createCinephile(name, email, hashedPassword);
         return c.json(
-            { token: generateJWT(cinephileId, name) },
+            {
+                token: generateJWT(cinephile.id, name),
+                id: cinephile.id
+            },
             HTTP_STATUS.CREATED
         );
     }
@@ -60,7 +63,10 @@ export const login = async (c: Context): Promise<Response> => {
         }
 
         return c.json(
-            { token: generateJWT(cinephile.id, cinephile.name) },
+            {
+                token: generateJWT(cinephile.id, cinephile.name),
+                id: cinephile.id,
+            },
             HTTP_STATUS.OK
         );
     } catch (error) {
