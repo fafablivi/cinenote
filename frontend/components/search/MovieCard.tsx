@@ -1,12 +1,13 @@
-import { Movie } from "@/app/model/movie";
+import { Movie } from "@/model/movie";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { getGenreName } from "@/lib/formatter";
-import { Star, Calendar, Clock, Plus } from "lucide-react";
+import { getGenreName } from "@/lib/genres";
+import { Star, Calendar, Plus } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { formatDate } from "@/lib/utils";
 
 interface MovieCardProps {
     movie: Movie;
@@ -49,7 +50,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
                             src={
                                 movie.poster_path
                                     ? `https://image.tmdb.org/t/p/w154${movie.poster_path}`
-                                    : "/placeholder.svg?height=120&width=80"
+                                    : "/placeholder.svg?height=160&width=240"
                             }
                             alt={movie.title}
                             className="w-16 h-24 object-cover rounded-md shadow-lg"
@@ -72,14 +73,8 @@ export default function MovieCard({ movie }: MovieCardProps) {
                             <div className="flex items-center gap-3 text-xs text-slate-400 mt-1">
                                 <span className="flex items-center gap-1">
                                     <Calendar className="w-3 h-3" />
-                                    {movie.release_date}
+                                    {formatDate(movie.release_date)}
                                 </span>
-                                {movie.runtime && (
-                                    <span className="flex items-center gap-1">
-                                        <Clock className="w-3 h-3" />
-                                        {movie.runtime}min
-                                    </span>
-                                )}
                             </div>
                         </div>
 

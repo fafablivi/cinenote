@@ -16,7 +16,6 @@ import {
 import { Search, Film, User, LogOut, Home, Loader2 } from "lucide-react"
 import { Suspense } from "react"
 import { useRouter } from "next/navigation"
-import { Toaster } from "react-hot-toast"
 
 interface CinephileProfile {
     id: string
@@ -55,6 +54,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 if (response.ok) {
                     const data = await response.json()
                     setUser(data)
+                } else if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem("cinephileId")
+                    localStorage.removeItem("token")
+                    router.push("/login")
                 }
             } catch (error) {
                 console.error("Erreur lors de la récupération du profil:", error)
@@ -92,25 +95,32 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <nav className="border-b border-slate-700 bg-slate-800/50 backdrop-blur sticky top-0 z-50">
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between h-16">
-                        <Link href="/profile" className="flex items-center space-x-2">
+                        <Link href="/dashboard" className="flex items-center space-x-2">
                             <Film className="w-8 h-8 text-blue-400" />
                             <span className="text-xl font-bold text-white">CineNote</span>
                         </Link>
 
-                        <div className="hidden md:flex items-center space-x-6">
-                            {/* <Link
+                        <div className="hidden md:flex items-center space-x-6 gap-6">
+                            <Link
                                 href="/dashboard"
                                 className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
                             >
                                 <Home className="w-4 h-4" />
                                 <span>Accueil</span>
-                            </Link> */}
+                            </Link>
                             <Link
                                 href="/search"
                                 className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
                             >
                                 <Search className="w-4 h-4" />
                                 <span>Rechercher</span>
+                            </Link>
+                            <Link
+                                href="/watchlist"
+                                className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
+                            >
+                                <Film className="w-4 h-4" />
+                                <span>Ma Liste</span>
                             </Link>
                         </div>
 
@@ -140,12 +150,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                             <span>Profil</span>
                                         </Link>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem className="text-slate-300 hover:text-white hover:bg-slate-700">
-                                        <Link href="/watchlist" className="flex items-center space-x-2">
-                                            <Film className="mr-2 h-4 w-4" />
-                                            <span>Ma liste</span>
-                                        </Link>
-                                    </DropdownMenuItem>
                                     <DropdownMenuSeparator className="bg-slate-700" />
                                     <DropdownMenuItem
                                         onClick={handleLogout}
@@ -161,7 +165,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </div>
             </nav>
 
-            {/* Main Content */}
             <main className="container mx-auto px-4 py-8">{children}</main>
         </div>
     )

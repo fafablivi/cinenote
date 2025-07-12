@@ -35,3 +35,13 @@ export async function tmdbGetMovieDetails(tmdbId: string) {
         throw new Error("Erreur lors de la récupération des détails du film depuis TMDb");
     }
 }
+
+export async function tmdbGetPopularMovies() {
+    try {
+        const data = await getFromTMDb(`/discover/movie?include_adult=false&include_video=false&language=fr-FR&page=1&sort_by=popularity.desc`);
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw new Error("Erreur lors de la récupération des crédits du film depuis TMDb");
+    }
+}

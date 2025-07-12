@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 import { HTTP_STATUS } from "../lib/httpStatus";
 import { tmdbGetMovieDetails, tmdbSearchMovie } from "../services/tmdbService";
-import { getAllMovies } from "../services/movieService";
+import { getAllMovies, getAllPopularMovies } from "../services/movieService";
 
 export const searchMovie = async (c: Context): Promise<Response> => {
     try {
@@ -56,6 +56,18 @@ export const getMovies = async (c: Context): Promise<Response> => {
     } catch (error) {
         return c.json(
             { error: "Erreur lors de la récupération des films: " + (error instanceof Error ? error.message : "Erreur inconnue") },
+            HTTP_STATUS.INTERNAL_SERVER_ERROR
+        );
+    }
+}
+
+export const getPopularMovies = async (c: Context): Promise<Response> => {
+    try {
+        const movies = await getAllPopularMovies();
+        return c.json(movies, HTTP_STATUS.OK);
+    } catch (error) {
+        return c.json(
+            { error: "Erreur lors de la récupération des films populaires: " + (error instanceof Error ? error.message : "Erreur inconnue") },
             HTTP_STATUS.INTERNAL_SERVER_ERROR
         );
     }

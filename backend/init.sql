@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS cinephile (
 
 CREATE TABLE IF NOT EXISTS movie (
     id SERIAL PRIMARY KEY,
-    tmdb_id string NOT NULL,
+    tmdb_id VARCHAR(255) NOT NULL,
     poster_path VARCHAR(255),
     title VARCHAR(255) NOT NULL,
     description TEXT,
@@ -28,18 +28,10 @@ CREATE TABLE IF NOT EXISTS watchlist (
     id SERIAL PRIMARY KEY,
     cinephile_id INT NOT NULL,
     movie_id INT NOT NULL,
+    watched BOOLEAN DEFAULT FALSE,
+    rating INT CHECK (rating >= 1 AND rating <= 5),
+    updated_at TIMESTAMP,
     created_at TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (cinephile_id) REFERENCES cinephile(id) ON DELETE CASCADE,
     FOREIGN KEY (movie_id) REFERENCES movie(id) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS review (
-    id SERIAL PRIMARY KEY,
-    movie_id INT NOT NULL,
-    cinephile_id INT NOT NULL,
-    rating INT CHECK (rating >= 1 AND rating <= 5),
-    comment TEXT,
-    created_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY (movie_id) REFERENCES movie(id) ON DELETE CASCADE,
-    FOREIGN KEY (cinephile_id) REFERENCES cinephile(id) ON DELETE CASCADE
 );

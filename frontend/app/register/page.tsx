@@ -64,7 +64,7 @@ export default function RegisterPage() {
                 }),
             })
 
-            
+
             if (response.ok) {
                 setSuccess(true)
                 const data = await response.json()
@@ -72,7 +72,7 @@ export default function RegisterPage() {
                 localStorage.setItem("cinephileId", data.id)
 
                 setTimeout(() => {
-                    router.push(`/profile/${data.id}`)
+                    router.push(`/profile`)
                 }, 2000)
             } else {
                 const errorData = await response.json()

@@ -1,4 +1,4 @@
-import { Movie } from "@/app/model/movie";
+import { Movie } from "@/model/movie";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";

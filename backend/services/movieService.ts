@@ -1,4 +1,5 @@
 import db from "../config/dbConfig";
+import { tmdbGetPopularMovies } from "./tmdbService";
 
 export async function createMovie(
     tmdb_id: string,
@@ -34,7 +35,7 @@ export async function getMovieById(movieId: string) {
     }
 }
 
-export async function getMovieByField(field:string, value: string) {
+export async function getMovieByField(field: string, value: string) {
     try {
         const movie = await db("movie").where(field, value).first();
         if (!movie) {
@@ -52,5 +53,25 @@ export async function getAllMovies() {
         return movies;
     } catch (error) {
         throw new Error("Erreur lors de la récupération des films: " + (error instanceof Error ? error.message : "Erreur inconnue"));
+    }
+}
+
+export async function getAllPopularMovies() {
+    try {
+        const response = await tmdbGetPopularMovies();
+
+        const movies = response.results.map((movie: any) => ({
+            id: movie.id,
+            title: movie.title,
+            release_date: movie.release_date || "",
+            vote_average: movie.vote_average || 0,
+            poster_path: movie.poster_path || "",
+        }));
+
+        console.log("Popular movies fetched from TMDB:", movies);
+
+        return movies;
+    } catch (error) {
+        throw new Error("Erreur lors de la récupération des films populaires: " + (error instanceof Error ? error.message : "Erreur inconnue"));
     }
 }

@@ -1,58 +1,19 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { CalendarDays, Mail, User } from "lucide-react"
-
-interface UserProfile {
-    id: string
-    name: string
-    email: string
-    profile_picture?: string
-    biography?: string
-    created_at: string
-}
+import { useCinephile } from "@/hooks/useCinephile"
 
 export default function ProfilePage() {
-    const [profile, setProfile] = useState<UserProfile | null>(null)
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState("")
+    const { cinephile, isLoading, error } = useCinephile();
 
     useEffect(() => {
         document.title = "CinéNote - Mon Profil";
     }, []);
-
-    useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cinephile/${localStorage.getItem("cinephileId") || ""}`,
-                    {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${localStorage.getItem("token") || ""}`,
-                        },
-                    }
-                )
-
-                if (response.ok) {
-                    const data = await response.json()
-                    setProfile(data)
-                } else {
-                    setError("Profil non trouvé")
-                }
-            } catch {
-                setError("Erreur lors du chargement du profil")
-            } finally {
-                setIsLoading(false)
-            }
-        }
-
-        fetchProfile()
-    }, [])
 
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString("fr-FR", {
@@ -70,7 +31,7 @@ export default function ProfilePage() {
         )
     }
 
-    if (error || !profile) {
+    if (error || !cinephile) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
                 <Card className="w-full max-w-md border-red-500 bg-slate-800/50 backdrop-blur">
@@ -89,31 +50,31 @@ export default function ProfilePage() {
                     <CardHeader className="text-center pb-4">
                         <div className="flex justify-center mb-4">
                             <Avatar className="w-24 h-24 border-4 border-slate-600">
-                                <AvatarImage src={profile.profile_picture || "/placeholder.svg"} alt={profile.name} />
+                                <AvatarImage src={cinephile?.profile_picture || "/placeholder.svg"} alt={cinephile.name} />
                                 <AvatarFallback className="bg-slate-700 text-blue-400 text-2xl">
-                                    {profile.name.charAt(0).toUpperCase()}
+                                    {cinephile.name.charAt(0).toUpperCase()}
                                 </AvatarFallback>
                             </Avatar>
                         </div>
-                        <CardTitle className="text-2xl text-white">{profile.name}</CardTitle>
+                        <CardTitle className="text-2xl text-white">{cinephile.name}</CardTitle>
                     </CardHeader>
 
                     <CardContent className="space-y-6">
                         <div className="flex items-center gap-3 text-slate-300">
                             <Mail className="w-5 h-5 text-blue-400" />
-                            <span>{profile.email}</span>
+                            <span>{cinephile.email}</span>
                         </div>
 
                         <Separator className="bg-slate-600" />
 
-                        {profile.biography && (
+                        {cinephile.biography && (
                             <>
                                 <div>
                                     <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
                                         <User className="w-5 h-5 text-blue-400" />
                                         Biographie
                                     </h3>
-                                    <p className="text-slate-300 leading-relaxed">{profile.biography}</p>
+                                    <p className="text-slate-300 leading-relaxed">{cinephile.biography}</p>
                                 </div>
                                 <Separator className="bg-slate-600" />
                             </>
@@ -121,7 +82,7 @@ export default function ProfilePage() {
 
                         <div className="flex items-center gap-3 text-slate-300">
                             <CalendarDays className="w-5 h-5 text-blue-400" />
-                            <span>Membre depuis le {formatDate(profile.created_at)}</span>
+                            <span>Membre depuis le {formatDate(cinephile.created_at)}</span>
                         </div>
 
                         <div className="pt-4">
