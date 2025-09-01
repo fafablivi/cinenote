@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Search, Film, Star } from "lucide-react"
+import { Search, Film, User } from "lucide-react"
 
 export function QuickActions() {
   return (
@@ -28,10 +28,15 @@ export function QuickActions() {
             Ma liste complète
           </Button>
         </Link>
-        <Button variant="outline" className="w-full border-slate-600 text-slate-300 hover:bg-slate-700 bg-transparent">
-          <Star className="w-4 h-4 mr-2" />
-          Films recommandés
-        </Button>
+        <Link href="/profile">
+          <Button
+            variant="outline"
+            className="w-full border-slate-600 text-slate-300 hover:bg-slate-700 bg-transparent"
+          >
+            <User className="w-4 h-4 mr-2" />
+            Mon profil
+          </Button>
+        </Link>
       </CardContent>
     </Card>
   )

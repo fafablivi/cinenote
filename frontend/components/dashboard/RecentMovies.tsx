@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Eye, Calendar, Search } from "lucide-react"
 import Image from "next/image"
 import { WatchlistMovie } from "@/model/movie"
+import { formatDate } from "@/lib/utils"
 
 interface RecentMoviesProps {
   movies: WatchlistMovie[]
@@ -76,7 +77,7 @@ export function RecentMovies({ movies }: RecentMoviesProps) {
               </h4>
               <div className="flex items-center gap-2 text-xs text-slate-400 mt-1">
                 <Calendar className="w-3 h-3" />
-                <span>{movie.release_date}</span>
+                <span>{formatDate(movie.release_date)}</span>
               </div>
             </div>
           ))}
