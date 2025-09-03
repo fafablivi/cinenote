@@ -1,10 +1,10 @@
 "use client"
 
-import { WelcomeSection } from "@/components/dashboard/WelcomeSection"
-import { DashboardStats } from "@/components/dashboard/DashboardStats"
-import { QuickActions } from "@/components/dashboard/QuickActions"
-import { RecentMovies } from "@/components/dashboard/RecentMovies"
-import { PopularMovies } from "@/components/dashboard/PopularMovies"
+import { WelcomeSection } from "@/components/features/dashboard/WelcomeSection"
+import { DashboardStats } from "@/components/features/dashboard/DashboardStats"
+import { QuickActions } from "@/components/features/dashboard/QuickActions"
+import { RecentMovies } from "@/components/features/dashboard/RecentMovies"
+import { PopularMovies } from "@/components/features/dashboard/PopularMovies"
 import { useWatchlist } from "@/hooks/useWatchlist"
 
 export default function DashboardPage() {

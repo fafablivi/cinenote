@@ -5,8 +5,8 @@ import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Search } from "lucide-react"
 import { Movie } from "@/model/movie"
-import MovieCard from "../../../components/search/MovieCard"
-import SearchSection from "../../../components/search/SearchSection"
+import MovieCard from "../../../components/features/search/MovieCard"
+import SearchSection from "../../../components/features/search/SearchSection"
 
 export default function SearchPage() {
     const [movies, setMovies] = useState<Movie[]>([])
