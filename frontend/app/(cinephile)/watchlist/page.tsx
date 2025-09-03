@@ -8,8 +8,8 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Film, Search, Filter, RefreshCw, Loader2 } from "lucide-react"
 import { useWatchlist } from "@/hooks/useWatchlist"
-import { WatchlistCard } from "@/components/watchlist/WatchlistCard"
-import { WatchlistStats } from "@/components/watchlist/WatchlistStats"
+import { WatchlistCard } from "@/components/features/watchlist/WatchlistCard"
+import { WatchlistStats } from "@/components/features/watchlist/WatchlistStats"
 
 export default function WatchlistPage() {
   const { movies, isLoading, error, refetch, removeFromWatchlist, toggleWatched, rateMovie } = useWatchlist()
