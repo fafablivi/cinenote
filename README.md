@@ -4,4 +4,4 @@ Le projet est organisé en deux parties principales : le frontend et le backend.
 
 Vous trouverez le fichier README du frontend dans `frontend/README.md` et celui du backend dans `backend/README.md`. 
 
-Cette séparation permet de mieux structurer les informations et de faciliter la navigation pour les développeurs travaillant sur chaque partie du projet.
+Cette séparation permet de mieux structurer les informations.
