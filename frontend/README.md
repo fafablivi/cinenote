@@ -19,7 +19,9 @@ Ce dépôt correspond à la **partie frontend**, développée avec **Next.js** (
 
 ⚠️ **Le backend doit être lancé** pour assurer le bon fonctionnement de toutes les fonctionnalités.
 
-1. Installer les dépendances :
+1. Créer un fichier `.env.local` en copiant le contenu de `.env.local.example`.
+
+2. Installer les dépendances :
 
 ```bash
 npm install

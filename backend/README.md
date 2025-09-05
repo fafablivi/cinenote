@@ -112,10 +112,18 @@ Status : **201 Created**
 npm install
 ```
 
-2. Démarrer le serveur de développement :
+2. Mettre en place la base de données PostgreSQL et exécuter le script d’initialisation :
+
+```bash
+psql -U <username> -d <database> -f init.sql
+```
+
+3. Créer un fichier `.env` en copiant le contenu de `.env.example` et en remplissant les valeurs nécessaires.
+
+4. Démarrer le serveur de développement :
 
 ```bash
 npm run dev
 ```
 
-3. Effectuer des appels à [http://localhost:3030](http://localhost:3000).
+5. Effectuer des appels à [http://localhost:3030](http://localhost:3000).

@@ -68,8 +68,6 @@ export async function getAllPopularMovies() {
             poster_path: movie.poster_path || "",
         }));
 
-        console.log("Popular movies fetched from TMDB:", movies);
-
         return movies;
     } catch (error) {
         throw new Error("Erreur lors de la récupération des films populaires: " + (error instanceof Error ? error.message : "Erreur inconnue"));
